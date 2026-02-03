@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Be My Valentine 💘</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Color+Emoji&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+
+<style>
+/* Persistent Custom Cursor */
+html, body {
+    height: 100vh;
+    background: linear-gradient(135deg, #fffdd0, #f5f5dc); /* Creamish Gradient */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    cursor: url("data:image/svg+xml;utf8,\
+    <svg xmlns='http://www.w3.org/2000/svg' width='24' height='24'>\
+    <text y='20' font-size='20'>💖</text></svg>") 12 12, auto !important;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", "Noto Color Emoji", sans-serif;
+    cursor: inherit !important; /* Prevents cursor change on buttons/text */
+}
+
+/* ---------- MOBILE BLOCK ---------- */
+.mobile-message {
+    display: none;
+    background: white;
+    padding: 35px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    z-index: 10;
+}
+
+.mobile-message h2 {
+    color: #d6336c;
+    line-height: 1.4;
+}
+
+/* ---------- DESKTOP CONTENT ---------- */
+.desktop {
+    width: 100%;
+    height: 100%;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+.emoji-bg {
+    position: fixed;
+    inset: 0;
+    font-size: 32px;
+    opacity: 0.12; 
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+    grid-template-rows: repeat(auto-fill, minmax(80px, 1fr));
+    place-items: center;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.card {
+    width: 70vw;
+    height: 70vh;
+    max-width: 900px;
+    max-height: 520px;
+    background: white;
+    border-radius: 24px;
+    padding: 50px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.12);
+    z-index: 2;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+/* Wiggle Animation for Yes Button */
+@keyframes wiggle {
+    0% { transform: rotate(0deg); }
+    25% { transform: rotate(3deg); }
+    50% { transform: rotate(-3deg); }
+    75% { transform: rotate(3deg); }
+    100% { transform: rotate(0deg); }
+}
+
+.yes:hover {
+    animation: wiggle 0.3s ease-in-out 2;
+}
+
+.popup-box {
+    width: 360px;
+    min-height: 220px;
+    background: white;
+    border-radius: 20px;
+    padding: 40px 30px;
+    text-align: center;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+}
+
+h1 {
+    color: #d6336c;
+    margin-bottom: 40px;
+    line-height: 1.4;
+    font-size: 2.2rem;
+}
+
+.buttons, .popup-btns {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+    margin-top: 20px;
+}
+
+button {
+    border: none;
+    padding: 14px 30px;
+    border-radius: 40px;
+    font-size: 16px;
+    font-weight: 600;
+    transition: 0.3s ease;
+    background: #f1f1f1;
+    color: #444;
+}
+
+.yes, .btn-primary {
+    background: #ff6f91;
+    color: white;
+}
+
+.no {
+    position: relative; 
+}
+
+.popup {
+    position: fixed;
+    inset: 0;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 5;
+    background: rgba(0,0,0,0.05);
+}
+</style>
+</head>
+
+<body>
+
+<div class="emoji-bg" id="bgGrid"></div>
+
+<div class="mobile-message" id="mobileMsg">
+    <h2>My love won’t fit into this size 💕<br><br>Please open it on desktop 💖</h2>
+</div>
+
+<div class="desktop" id="desktopContent">
+    <div class="card">
+        <h1>Hey Ashi, will you be my Valentine? 💕</h1>
+        <div class="buttons">
+            <button class="yes" id="yesBtn">Yes ✨</button>
+            <button class="no" id="noBtn">No 😡</button>
+        </div>
+    </div>
+
+    <div class="popup" id="popup1">
+        <div class="popup-box">
+            <h2 style="color: #d6336c;">Are you sure? 🥺</h2>
+            <div class="popup-btns">
+                <button onclick="closePopup()">Go back</button>
+                <button class="btn-primary" onclick="showPopup2()">Sure 😈</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="popup" id="popup2">
+        <div class="popup-box">
+            <h2 style="color: #d6336c;">Incorrect selection 🤦‍♂️</h2>
+	<p>Too late to say no!!</p>
+            <div class="popup-btns">
+                <button class="btn-primary" onclick="showYesPopup()">Okay, YES ✨</button>
+            </div>
+        </div>
+    </div>
+
+<div class="popup" id="loveLetter">
+    <div class="popup-box" style="width: 400px;"> <h2 style="color: #d6336c; margin-bottom: 15px;">I knew it! 💖</h2>
+        
+        <img src="./Happy Valentine.gif" 
+             alt="Happy Valentine GIF" 
+             style="width: 100%; border-radius: 15px; margin-bottom: 15px;">
+
+        <div class="popup-btns">
+            <button class="btn-primary" onclick="closePopup()">Close 💕</button>
+        </div>
+    </div>
+</div>
+</div>
+
+<script>
+const bg = document.getElementById('bgGrid');
+const emojis = ['💖', '🌸', '💕', '💗', '🧸', '💞', '🌷', '💝'];
+for (let i = 0; i < 300; i++) {
+    const span = document.createElement('span');
+    span.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+    bg.appendChild(span);
+}
+
+if (window.innerWidth <= 900) {
+    document.getElementById("mobileMsg").style.display = "block";
+} else {
+    document.getElementById("desktopContent").style.display = "flex";
+}
+
+let noClicks = 0;
+const noBtn = document.getElementById("noBtn");
+const yesBtn = document.getElementById("yesBtn");
+
+noBtn.addEventListener("click", () => {
+    noClicks++;
+    noBtn.style.position = "absolute"; 
+    if (noClicks === 1) {
+        noBtn.innerText = "No 🥺";
+        yesBtn.innerText = "Yes 😫";
+        moveNo();
+    } else if (noClicks === 2) {
+        noBtn.innerText = "No 😭";
+        yesBtn.innerText = "Yes 😭";
+        moveNo();
+    } else if (noClicks >= 3) {
+        document.getElementById("popup1").style.display = "flex";
+    }
+});
+
+yesBtn.addEventListener("click", () => {
+    showYesPopup();
+});
+
+function moveNo() {
+    // Proximity logic: stays near the "Yes" area without overlapping it
+    const x = (Math.random() * 90 + 70) * (Math.random() < 0.5 ? 1 : -1);
+    const y = (Math.random() * 50 + 40) * (Math.random() < 0.5 ? 1 : -1);
+    noBtn.style.transform = `translate(${x}px, ${y}px)`;
+}
+
+function closePopup() {
+    document.querySelectorAll(".popup").forEach(p => p.style.display = "none");
+}
+
+function showPopup2() {
+    closePopup();
+    document.getElementById("popup2").style.display = "flex";
+}
+
+function showYesPopup() {
+    closePopup();
+    document.getElementById("loveLetter").style.display = "flex";
+}
+</script>
+
+</body>
+</html>
