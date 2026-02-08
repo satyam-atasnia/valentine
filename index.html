@@ -238,9 +238,18 @@ const yesBtn = document.getElementById("yesBtn");
 noBtn.addEventListener("click", () => {
     noClicks++;
     noBtn.style.position = "absolute";
-    if (noClicks === 1) moveNo();
-    else if (noClicks === 2) moveNo();
-    else document.getElementById("popup1").style.display = "flex";
+
+     if (noClicks === 1) {
+        noBtn.innerText = "No 🥺";
+        yesBtn.innerText = "Yes 😫";
+        moveNo();
+    } else if (noClicks === 2) {
+        noBtn.innerText = "No 😭";
+        yesBtn.innerText = "Yes 😭";
+        moveNo();
+    } else if (noClicks >= 3) {
+        document.getElementById("popup1").style.display = "flex";
+    }
 });
 
 yesBtn.addEventListener("click", showYesPopup);
